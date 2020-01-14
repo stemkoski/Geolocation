@@ -2,11 +2,28 @@
 <html>
 <head>
 	<title></title>
+	<meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css" />
+    <style>
+      html, body {
+        height: 100%;
+        padding: 0;
+        margin: 0;
+      }
+      #map {
+        /* configure the size of the map */
+        width: 800px;
+        height: 600px;
+      }
+    </style>
 </head>
 <body>
 
-Version 2.
+Version 3.
 
+<div id="map" ></div>
 
 <p>
   Your location is <span id="latitude">0.00</span>°
@@ -20,6 +37,23 @@ Version 2.
 
 <script type="text/javascript">
 
+// load a map
+// initialize Leaflet.js map object, centered at given coordinates, at given zoom level
+      // var map = L.map('map').setView({lon: -73.65173, lat: 40.72063}, 19);
+	  var map = L.map('map').setView({lon: -72, lat: 42}, 19);
+
+      // add the OpenStreetMap tiles
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '&copy; <a href="https://openstreetmap.org/copyright">OpenStreetMap contributors</a>'
+      }).addTo(map);
+
+      // show the scale bar on the lower left corner
+      L.control.scale().addTo(map);
+
+
+
+
 let updateCount = 0;
 	
 let button = document.getElementById("get-location");
@@ -27,15 +61,7 @@ let latText = document.getElementById("latitude");
 let longText = document.getElementById("longitude");
 let updateText = document.getElementById("update");
 
-button.addEventListener("click", function() {
-  navigator.geolocation.getCurrentPosition(function(position) {
-    let lat = position.coords.latitude;
-    let long = position.coords.longitude;
-
-    latText.innerText = lat.toFixed(2);
-    longText.innerText = long.toFixed(2);
-  });
-});
+button.addEventListener("click", updateLocation);
 
 
 function updateLocation()
@@ -45,20 +71,22 @@ function updateLocation()
 	    let lat = position.coords.latitude;
 	    let long = position.coords.longitude;
 
-	    latText.innerText = lat.toFixed(4);
-	    longText.innerText = long.toFixed(4);
+	    latText.innerText = lat;
+	    longText.innerText = long;
 
 	    updateCount += 1;
 	    updateText.innerText = updateCount;
 
+	    map.setView({lon: long, lat: lat}, 19);
+
   });
 
-  setTimeout( updateLocation, 500 );
+  // setTimeout( updateLocation, 5000 );
 
 
 }
 
-updateLocation();
+//updateLocation();
 
 </script>
 
