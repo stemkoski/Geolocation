@@ -21,7 +21,7 @@
 </head>
 <body>
 
-Version 3.
+Version 4.
 
 <div id="map" ></div>
 
@@ -51,7 +51,9 @@ Version 3.
       // show the scale bar on the lower left corner
       L.control.scale().addTo(map);
 
-
+      var us = L.marker({lon: -72, lat: 42})
+                     .bindPopup( "This is you." )
+                     .addTo( map );
 
 
 let updateCount = 0;
@@ -78,6 +80,11 @@ function updateLocation()
 	    updateText.innerText = updateCount;
 
 	    map.setView({lon: long, lat: lat}, 19);
+
+
+		let newLatLng = new L.LatLng(lat, long);
+    	us.setLatLng(newLatLng); 
+
 
   });
 
