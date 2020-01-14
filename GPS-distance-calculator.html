@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+
+
+<script type="text/javascript">
+	
+let a1 = 40.72063
+let b1 = -73.65173
+
+let a2 = 40.72073
+let b2 = -73.65273
+
+/* from: https://sciencing.com/convert-gps-coordinates-feet-7695232.html */
+function GPS_to_FT(a1, b1, a2, b2)
+{
+		return 131332796.6 * ( Math.acos( Math.cos(a1) * Math.cos(b1) * Math.cos(a2) * Math.cos(b2) + Math.cos(a1) * Math.sin(b1) * Math.cos(a2) * Math.sin(b2) + Math.sin(a1) * Math.sin(a2)) / 360 );
+}
+
+console.log("distance:")
+console.log( GPS_to_FT(a1,b1,a2,b2) )
+
+</script>
+
+</body>
+</html>
