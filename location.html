@@ -5,19 +5,27 @@
 </head>
 <body>
 
+Version 2.
+
+
 <p>
   Your location is <span id="latitude">0.00</span>°
   latitude by <span id="longitude">0.00</span>° longitude.
+  <br/>
+  This is update number: <span id="update">?</span>.
 </p>
 <button id="get-location">
   Get My Location
 </button>
 
 <script type="text/javascript">
+
+let updateCount = 0;
 	
 let button = document.getElementById("get-location");
 let latText = document.getElementById("latitude");
 let longText = document.getElementById("longitude");
+let updateText = document.getElementById("update");
 
 button.addEventListener("click", function() {
   navigator.geolocation.getCurrentPosition(function(position) {
@@ -28,7 +36,30 @@ button.addEventListener("click", function() {
     longText.innerText = long.toFixed(2);
   });
 });
-	
+
+
+function updateLocation()
+{
+
+	navigator.geolocation.getCurrentPosition(function(position) {
+	    let lat = position.coords.latitude;
+	    let long = position.coords.longitude;
+
+	    latText.innerText = lat.toFixed(4);
+	    longText.innerText = long.toFixed(4);
+
+	    updateCount += 1;
+	    updateText.innerText = updateCount;
+
+  });
+
+  setTimeout( updateLocation, 500 );
+
+
+}
+
+updateLocation();
+
 </script>
 
 
